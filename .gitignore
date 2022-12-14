@@ -203,6 +203,7 @@ cython_debug/
 #.idea/
 
 ### Node ###
+package-lock.json
 # Logs
 logs
 npm-debug.log*
@@ -321,6 +322,9 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
+
+# yarn lock
+yarn.lock
 
 # yarn v2
 .yarn/cache

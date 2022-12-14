@@ -69,6 +69,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
+STRIPE_PUBLISHABLE_KEY = '<your test publishable key here>'
+STRIPE_SECRET_KEY = '<your test secret key here>'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases

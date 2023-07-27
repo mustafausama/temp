@@ -20,6 +20,61 @@ after_script:
 # Child branches can add their specific jobs and stages below.
 # Jobs can be named according to the conventions of the respective project.
 
+# Django specific jobs
+django_build:
+  stage: build
+  script:
+    - cd backend  # Change to the Django project directory
+    - poetry install  # Install project dependencies
+    - python manage.py collectstatic --noinput  # Collect static files
+    - python manage.py migrate --noinput  # Apply database migrations
+
+django_test:
+  stage: test
+  script:
+    - cd backend  # Change to the Django project directory
+    - poetry install  # Install project dependencies
+    - python manage.py test  # Run Django tests
+
+# Django deployment jobs
+aws_eb_deploy:
+  stage: deploy
+  script:
+    - cd backend  # Change to the Django project directory
+    - poetry install  # Install project dependencies
+    - python manage.py collectstatic --noinput  # Collect static files
+    - python manage.py migrate --noinput  # Apply database migrations
+    - pip install awsebcli  # Install AWS Elastic Beanstalk CLI
+    - eb deploy  # Actual Elastic Beanstalk deployment command
+  only:
+    - main  # Deploy only from the main branch
+
+# DigitalOcean deployment
+digitalocean_deploy:
+  stage: deploy
+  script:
+    - cd backend  # Change to the Django project directory
+    - poetry install  # Install project dependencies
+    - python manage.py collectstatic --noinput  # Collect static files
+    - python manage.py migrate --noinput  # Apply database migrations
+    - ssh user@your-digitalocean-server-ip 'dokku git:sync --force your-app-name'  # Replace "user", "your-digitalocean-server-ip", and "your-app-name" with the appropriate values
+  only:
+    - main  # Deploy only from the main branch
+
+# Placeholder for other cloud service deployment (add the actual deployment job and command)
+# other_cloud_service_deploy:
+#   stage: deploy
+#   script:
+#     - cd backend  # Change to the Django project directory
+#     - poetry install  # Install project dependencies
+#     - python manage.py collectstatic --noinput  # Collect static files
+#     - python manage.py migrate --noinput  # Apply database migrations
+#     - your-actual-deployment-command-for-other-cloud-service  # Replace this with the actual deployment command for the other cloud service
+#   only:
+#     - main  # Deploy only from the main branch
+
+# Feel free to add any other cloud-based service deployments as needed.
+
 # Child branches can define their own jobs and stages based on their specific needs.
 
 # If child branches want to override global settings, they can do so here.

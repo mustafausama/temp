@@ -20,6 +20,67 @@ after_script:
 # Child branches can add their specific jobs and stages below.
 # Jobs can be named according to the conventions of the respective project.
 
+# React specific jobs
+react_build:
+  stage: build
+  script:
+    - cd frontend
+    - npm install  # Install dependencies
+    - npm run build  # Build the React app
+
+react_test:
+  stage: test
+  script:
+    - cd frontend
+    - npm install  # Install dependencies
+    - npm run test  # Run tests
+
+# React deployment jobs
+aws_s3_deploy:
+  stage: deploy
+  script:
+    - cd frontend
+    - npm install  # Install dependencies
+    - npm run build  # Build the React app
+    - aws s3 sync build/ s3://your-aws-s3-bucket-name  # Replace "your-aws-s3-bucket-name" with your actual bucket name
+  only:
+    - main  # Deploy only from the main branch
+
+# DigitalOcean deployment (commented out)
+# digitalocean_deploy:
+#   stage: deploy
+#   script:
+#     - cd frontend
+#     - npm install  # Install dependencies
+#     - npm run build  # Build the React app
+#     - your-digitalocean-deploy-command  # Replace this with your actual DigitalOcean deployment command
+#   only:
+#     - main  # Deploy only from the main branch
+
+# Vercel deployment (commented out)
+# vercel_deploy:
+#   stage: deploy
+#   script:
+#     - cd frontend
+#     - npm install  # Install dependencies
+#     - npm run build  # Build the React app
+#     - your-vercel-deploy-command  # Replace this with your actual Vercel deployment command
+#   only:
+#     - main  # Deploy only from the main branch
+
+# Netlify deployment (commented out)
+# netlify_deploy:
+#   stage: deploy
+#   script:
+#     - cd frontend
+#     - npm install  # Install dependencies
+#     - npm run build  # Build the React app
+#     - your-netlify-deploy-command  # Replace this with your actual Netlify deployment command
+#   only:
+#     - main  # Deploy only from the main branch
+
+# Feel free to add any other cloud-based service deployments as needed.
+
 # Child branches can define their own jobs and stages based on their specific needs.
 
 # If child branches want to override global settings, they can do so here.

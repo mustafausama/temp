@@ -1,0 +1,29 @@
+stages:
+  - build
+  - test
+  - deploy
+
+before_script:
+  # Add any global before_script commands or configurations here.
+
+after_script:
+  # Add any global after_script commands or configurations here.
+
+# Define global variables here (if needed).
+# variables:
+#   VARIABLE_NAME: variable_value
+
+# Define shared jobs here (if any).
+
+# Define any custom CI/CD templates or scripts here (if any).
+
+# Child branches can add their specific jobs and stages below.
+# Jobs can be named according to the conventions of the respective project.
+
+# Child branches can define their own jobs and stages based on their specific needs.
+
+# If child branches want to override global settings, they can do so here.
+
+# If child branches need to define additional variables or configurations, they can do so here.
+
+# Feel free to extend and customize this template as needed for specific CI/CD pipelines.

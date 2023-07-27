@@ -20,6 +20,56 @@ after_script:
 # Child branches can add their specific jobs and stages below.
 # Jobs can be named according to the conventions of the respective project.
 
+# Node.js specific jobs
+nodejs_build:
+  stage: build
+  script:
+    - cd backend  # Change to the Node.js project directory
+    - npm ci  # Install project dependencies (using the "ci" command for faster installs in CI)
+    - npm run build  # Build the Node.js app
+
+nodejs_test:
+  stage: test
+  script:
+    - cd backend  # Change to the Node.js project directory
+    - npm ci  # Install project dependencies (using the "ci" command for faster installs in CI)
+    - npm run test  # Run Node.js tests
+
+# Node.js deployment jobs
+aws_eb_deploy:
+  stage: deploy
+  script:
+    - cd backend  # Change to the Node.js project directory
+    - npm ci  # Install project dependencies (using the "ci" command for faster installs in CI)
+    - npm run build  # Build the Node.js app
+    - your-actual-deployment-command-for-AWS-Elastic-Beanstalk  # Replace this with the actual deployment command for AWS Elastic Beanstalk
+  only:
+    - main  # Deploy only from the main branch
+
+# DigitalOcean deployment
+digitalocean_deploy:
+  stage: deploy
+  script:
+    - cd backend  # Change to the Node.js project directory
+    - npm ci  # Install project dependencies (using the "ci" command for faster installs in CI)
+    - npm run build  # Build the Node.js app
+    - ssh user@your-digitalocean-server-ip 'dokku git:sync --force your-app-name'  # Replace "user", "your-digitalocean-server-ip", and "your-app-name" with the appropriate values
+  only:
+    - main  # Deploy only from the main branch
+
+# Placeholder for other cloud platform deployment (add the actual deployment job and command)
+# other_cloud_platform_deploy:
+#   stage: deploy
+#   script:
+#     - cd backend  # Change to the Node.js project directory
+#     - npm ci  # Install project dependencies (using the "ci" command for faster installs in CI)
+#     - npm run build  # Build the Node.js app
+#     - your-actual-deployment-command-for-other-cloud-platform  # Replace this with the actual deployment command for the other cloud platform
+#   only:
+#     - main  # Deploy only from the main branch
+
+# Feel free to add any other cloud-based service deployments as needed.
+
 # Child branches can define their own jobs and stages based on their specific needs.
 
 # If child branches want to override global settings, they can do so here.
